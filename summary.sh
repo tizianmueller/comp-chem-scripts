@@ -33,7 +33,7 @@ echo -e -n "\033[0;32m OK: \033[0m "
 
 # show welcome message
 echo "summary version $VERSION  " 
-echo "this line is new and kind of a second test"
+echo "i think this testing is over soon"
 
 
 LIST=`find -name "*.out"`
