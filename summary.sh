@@ -1,5 +1,3 @@
-
-
 #!/bin/bash
 #
 # create summarys of your computations 
@@ -15,7 +13,6 @@
 
 # difine variables
 VERSION="0.1"
-SETTINGS="%MaxCore 6000 \n%pal nprocs=8 \nend"
 USERNAME=`whoami`
 
 function prnt_error {
@@ -31,8 +28,13 @@ echo -e -n "\033[0;32m OK: \033[0m "
 }
 
 
+## here schould be some sort of check for arguments
+
+
+
+
 # show welcome message
-echo "summary version $VERSION  " 
+echo "summary version $VERSION  "
 echo "i think this testing is over soon"
 
 
