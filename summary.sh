@@ -31,6 +31,8 @@ echo -e -n "\033[0;32m OK: \033[0m "
 ## here schould be some sort of check for arguments
 
 
+echo "give me something"
+
 
 
 # show welcome message
