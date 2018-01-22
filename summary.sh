@@ -14,6 +14,7 @@
 # difine variables
 VERSION="0.1"
 USERNAME=`whoami`
+CSVFILENAME="summary.csv"
 
 function prnt_error {
 echo -e "\033[0;31m ERROR ! stopping script \033[0m "
@@ -37,8 +38,6 @@ echo "give me something"
 
 # show welcome message
 echo "summary version $VERSION  "
-echo "i think this testing is over soon"
-
 
 LIST=`find -name "*.out"`
 LISTARR=($LIST)
@@ -95,6 +94,12 @@ REV=`echo $RAW | awk '{print $8}' | sed 's/,//g'`
 
 
 ######################################################
+# initialisation of the *.csv files
+
+HEADER="File name;method; basisset; E(el); ZP corr.; E corr.; H corr.; G corr.; imaginary frequencies; Normal terminations; programm; Revison "
+echo "$HEADER" > $CSVFILENAME
+
+######################################################
 echo "name METH BASIS ENERG ZPVE ENERG ENTHALPY GIBBS"
 
 for name in "${LISTARR[@]}" ; do
@@ -108,6 +113,7 @@ find_version
 
 
 echo "$name $METH $BASIS $ENERG_EL $ZPVE $ENERG_THERM $ENTHALPY $GIBBS $IMAG $NTHERM $PROG $REV"
+echo "$name;$METH;$BASIS;$ENERG_EL;$ZPVE;$ENERG_THERM;$ENTHALPY;$GIBBS;$IMAG;$NTHERM;$PROG;$REV" >> $CSVFILENAME
 
 done
 
