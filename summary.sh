@@ -15,6 +15,7 @@
 VERSION="0.1"
 USERNAME=`whoami`
 CSVFILENAME="summary.csv"
+SCRIPTDIR=`dirname $(readlink -f ${0})`
 
 function prnt_error {
 echo -e "\033[0;31m ERROR ! stopping script \033[0m "
@@ -34,7 +35,7 @@ echo -e -n "\033[0;32m OK: \033[0m "
 while getopts ":h" OPTION; do
   case $OPTION in
     h) 
-	  vim help_summary.txt    #### Help file anlegen
+	  vim $SCRIPTDIR/help_summary.txt  
 	  exit
 	  ;;
     \?)
