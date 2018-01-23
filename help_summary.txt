@@ -11,6 +11,9 @@ summary.sh <arguments>
 Following commands are supported:
 
 -h	opens this help file
+-d	choose the used delimter of the CSV-File
+	Standart is Semicolon ";"
+	Some progams use Comma ","
 
 planned:
 trennzeichen CSV d delimiter

@@ -16,6 +16,8 @@ VERSION="0.1"
 USERNAME=`whoami`
 DIR=`pwd`
 CSVFILENAME="summary.csv"
+CSVFILENAME_BKUP="summary_bkup.csv"
+CSVDELIM=";"
 SCRIPTDIR=`dirname $(readlink -f ${0})`
 MAXFILES=25 # maximal files summary will read without extra user input
 
@@ -34,17 +36,20 @@ echo -e -n "\033[0;32m OK: \033[0m "
 
 ## here schould be some sort of check for arguments
 
-while getopts ":h" OPTION; do
+while getopts ":hd:" OPTION; do
   case $OPTION in
     h) 
-	  vim $SCRIPTDIR/help_summary.txt  
-	  exit
-	  ;;
+	vim $SCRIPTDIR/help_summary.txt  
+	exit
+	;;
+	d)
+	CSVDELIM=$OPTARG
+	;;
     \?)
-      echo "Invaliddsfasdfsdaf option: -$OPTARG" >&2
-	  echo "For Help type: sumary -h"
-	  exit
-      ;;
+    echo "Invaliddsfasdfsdaf option: -$OPTARG" >&2
+	echo "For Help type: sumary -h"
+	exit
+    ;;
   esac
 done
 
@@ -136,6 +141,7 @@ TABLEHEAD="File name;method; basisset; E(el); ZP corr.; E corr.; H corr.; G corr
 echo "$TABLEHEAD" >> $CSVFILENAME
 
 ######################################################
+# actuale magic happens here
 echo "name METH BASIS ENERG ZPVE ENERG ENTHALPY GIBBS"
 
 for name in "${LISTARR[@]}" ; do
@@ -154,7 +160,15 @@ echo "$name;$METH;$BASIS;$ENERG_EL;$ZPVE;$ENERG_THERM;$ENTHALPY;$GIBBS;$IMAG;$NT
 done
 
 ######################################################
+#post processing of the csv file
+#change the delimiter
 
+
+if [ "$CSVDELIM" != ";" ]
+then
+	cp $CSVFILENAME $CSVFILENAME_BKUP
+	awk '$1=$1' FS=";" OFS="$CSVDELIM" $CSVFILENAME_BKUP > $CSVFILENAME
+fi
 
 
 
