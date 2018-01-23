@@ -16,6 +16,7 @@ VERSION="0.1"
 USERNAME=`whoami`
 CSVFILENAME="summary.csv"
 SCRIPTDIR=`dirname $(readlink -f ${0})`
+MAXFILES=25 # maximal files summary will read without extra user input
 
 function prnt_error {
 echo -e "\033[0;31m ERROR ! stopping script \033[0m "
@@ -39,7 +40,7 @@ while getopts ":h" OPTION; do
 	  exit
 	  ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
+      echo "Invaliddsfasdfsdaf option: -$OPTARG" >&2
 	  echo "For Help type: sumary -h"
 	  exit
       ;;
@@ -53,6 +54,21 @@ echo "summary version $VERSION  "
 
 LIST=`find -name "*.out"`
 LISTARR=($LIST)
+
+
+# asks for user reply if too much files are found
+
+if [ ${#LISTARR[@]} -gt $MAXFILES ]
+then echo "found a large amount of .out files"
+     echo "${#LISTARR[@]} / $MAXFILES"
+     read -p "Do you want to proceed ? " -n 1 -r 
+		case $REPLY in
+        [Yy]* ) echo "  OK";;
+        [Nn]* ) echo ""; exit;;
+        * ) echo "  Please answer Y or N."; exit ;;
+        esac
+else echo "found ${#LISTARR[@]} .out files .. starting now"
+fi
 
 echo "found ${#LISTARR[@]} .out files"
 
