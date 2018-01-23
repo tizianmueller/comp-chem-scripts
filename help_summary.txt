@@ -18,3 +18,4 @@ trennzeichen CSV d delimiter
  Suchtiefe c current folder
  trennzeichen dezimal s seperator
  Output auf dem terminal (klein mittel groß)
+ max number abfrage
