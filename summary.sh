@@ -31,8 +31,19 @@ echo -e -n "\033[0;32m OK: \033[0m "
 
 ## here schould be some sort of check for arguments
 
-
-echo "give me something"
+while getopts ":h" OPTION; do
+  case $OPTION in
+    h) 
+	  vim help_summary.txt    #### Help file anlegen
+	  exit
+	  ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+	  echo "For Help type: sumary -h"
+	  exit
+      ;;
+  esac
+done
 
 
 
