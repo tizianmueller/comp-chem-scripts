@@ -12,9 +12,12 @@ Following commands are supported:
 
 -h	opens this help file
 -d	choose the used delimter of the CSV-File
-	Standart is Semicolon ";"
-	Some progams use Comma ","
-
+	Standard is Semicolon ";"
+	Some progams might use Comma "," or Colon ":"
+-s	choose the Decimal separator
+	Standard is Comma ","
+	Some reginal settings might prefer Comma ","
+ 
 planned:
 trennzeichen CSV d delimiter
  Suchtiefe f suchtiefe in ordnern

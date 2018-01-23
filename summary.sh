@@ -18,6 +18,7 @@ DIR=`pwd`
 CSVFILENAME="summary.csv"
 CSVFILENAME_BKUP="summary_bkup.csv"
 CSVDELIM=";"
+DECISEP="."
 SCRIPTDIR=`dirname $(readlink -f ${0})`
 MAXFILES=25 # maximal files summary will read without extra user input
 
@@ -36,7 +37,7 @@ echo -e -n "\033[0;32m OK: \033[0m "
 
 ## here schould be some sort of check for arguments
 
-while getopts ":hd:" OPTION; do
+while getopts ":hd:s:" OPTION; do
   case $OPTION in
     h) 
 	vim $SCRIPTDIR/help_summary.txt  
@@ -44,6 +45,9 @@ while getopts ":hd:" OPTION; do
 	;;
 	d)
 	CSVDELIM=$OPTARG
+	;;
+	s)
+	DECISEP=$OPTARG
 	;;
     \?)
     echo "Invaliddsfasdfsdaf option: -$OPTARG" >&2
@@ -152,6 +156,7 @@ find_ther_corr
 find_Nimag
 find_NTerm
 find_version
+name=`echo $name | sed -e 's/\.//g' `
 
 
 echo "$name $METH $BASIS $ENERG_EL $ZPVE $ENERG_THERM $ENTHALPY $GIBBS $IMAG $NTHERM $PROG $REV"
@@ -161,7 +166,7 @@ done
 
 ######################################################
 #post processing of the csv file
-#change the delimiter
+#change the CSV delimiter
 
 
 if [ "$CSVDELIM" != ";" ]
@@ -170,8 +175,14 @@ then
 	awk '$1=$1' FS=";" OFS="$CSVDELIM" $CSVFILENAME_BKUP > $CSVFILENAME
 fi
 
+#change the decimal seperator
 
-
+if [ "DECISEP" != "." ]
+then
+	cp $CSVFILENAME $CSVFILENAME_BKUP
+	sed "s/\./$DECISEP/g" $CSVFILENAME_BKUP > $CSVFILENAME
+	#awk '$1=$1' FS=";" OFS="$CSVDELIM" $CSVFILENAME_BKUP > $CSVFILENAME
+fi
 
 
 
