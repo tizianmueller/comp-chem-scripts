@@ -14,6 +14,7 @@
 # difine variables
 VERSION="0.1"
 USERNAME=`whoami`
+DIR=`pwd`
 CSVFILENAME="summary.csv"
 SCRIPTDIR=`dirname $(readlink -f ${0})`
 MAXFILES=25 # maximal files summary will read without extra user input
@@ -75,7 +76,7 @@ echo "found ${#LISTARR[@]} .out files"
 
 
 ######################################################
-#            Functions 
+#            Functions for reading various stuff
 
 function find_methode { # gives the used Method
 RAW=`grep -m 1 "GINC-" $name | sed -e 's.\\\. .g'`
@@ -102,7 +103,6 @@ function find_ther_corr { # finds the themal corrections for electronic Energy
 #GIBBS=`grep "Thermal correction to Gibbs Free Energy= " $name | awk '{print $7}'`
 }
 
-
 function find_Nimag {
 if  [ -z `grep -i -m 1 "imaginary frequencies (negative Signs" $name | awk '{print $2}'` ]
 then IMAG="0"
@@ -124,8 +124,16 @@ REV=`echo $RAW | awk '{print $8}' | sed 's/,//g'`
 ######################################################
 # initialisation of the *.csv files
 
-HEADER="File name;method; basisset; E(el); ZP corr.; E corr.; H corr.; G corr.; imaginary frequencies; Normal terminations; programm; Revison "
-echo "$HEADER" > $CSVFILENAME
+echo "summary.sh" > $CSVFILENAME #
+echo "user;$USERNAME" >> $CSVFILENAME
+echo "directory;$DIR" >> $CSVFILENAME
+echo "host;$(hostname)" >> $CSVFILENAME
+
+echo " " >> $CSVFILENAME
+
+TABLEHEAD="File name;method; basisset; E(el); ZP corr.; E corr.; H corr.; G corr.; imaginary frequencies; Normal terminations; programm; Revison "
+
+echo "$TABLEHEAD" >> $CSVFILENAME
 
 ######################################################
 echo "name METH BASIS ENERG ZPVE ENERG ENTHALPY GIBBS"
